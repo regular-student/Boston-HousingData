@@ -26,7 +26,7 @@ dados = dados.fillna(dados.mean())
 # Nota pra prova: Como todas as colunas são númericas, da pra passar o dataset inteiro pro normalizador
 scaler = MinMaxScaler() 
 
-# treina o normalizador
+# -> treina o normalizador
 normalizador = scaler.fit(dados)
 
 pickle.dump(normalizador, open("normalizador_boston.pkl", "wb")) 
@@ -39,7 +39,7 @@ dados_norm = pd.DataFrame(dados_norm_array, columns=dados.columns)
 # print("\t\tDados normalizados• •")
 # print(dados_norm.head())
 
-## a ideia agora é descobrir o número ótimo de clusters
+## -> a ideia agora é descobrir o número ótimo de clusters
 
 # testando de 1 a 45
 K = range(1, 45)
@@ -74,7 +74,14 @@ for i in range(len(distortions)):
 # número de clusters correspondente a maior distancia calculada
 numero_clusters_otimo = K[distances.index(np.max(distances))]
 
-print(numero_clusters_otimo)
+# print(numero_clusters_otimo)
 
+# -> treinar o modelo definitivo 
+cluster_model_final = KMeans(
+    n_clusters=numero_clusters_otimo,
+    random_state=42
+).fit(dados_norm)
 
-
+# salvando o modelo treinado dessa vez
+pickle.dump(cluster_model_final, open('cluster_model_final.pkl', 'wb'))
+print("checkpoint: success!")
