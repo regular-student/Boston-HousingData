@@ -42,7 +42,7 @@ dados_norm = pd.DataFrame(dados_norm_array, columns=dados.columns)
 ## -> a ideia agora é descobrir o número ótimo de clusters
 
 # testando de 1 a 45
-K = range(1, 45)
+K = range(1, dados.shape[0])
 distortions = []
 
 for i in K:
